@@ -1,6 +1,7 @@
 import flet as ft
 from UI.view import View
 from model.model import DepositoStrumenti
+from UI.alert import AlertManager
 
 '''
     CONTROLLER:
@@ -28,4 +29,37 @@ class Controller:
         self._view.update()
 
     # Altre Funzioni Event Handler
-    # TODO
+    def handler_mostra_strumenti(self):
+        try:
+            self._view.lista_strumenti.controls.clear()
+            lista_strumenti = self._model.get_strumenti()
+            if lista_strumenti is None:
+                raise Exception(f"Nessuno strumento disponibile nel deposito '{self._model.nome}' !!")
+            for s in lista_strumenti:
+                stato = "✅" if s.disponibile else "⛔"
+                self._view.lista_strumenti.controls.append(ft.Text(f"{stato} {s}"))
+            self._view.lista_strumenti.update()
+
+        except Exception as e:
+            alert = AlertManager(self._view.page)
+            alert.show_alert(f"ERRORE:❌ {e}")
+
+
+
+    def handler_cerca_per_tipo(self):
+        try:
+            self._view.lista_strumenti_ricerca.controls.clear()
+            tipo = self._view.input_tipo_strumento.value
+            strumenti_del_tipo = self._model.cerca_strumenti_per_tipo(tipo)
+            if strumenti_del_tipo is None:
+                raise Exception(f"Non è presente nessuno strumento del tipo '{tipo}' !!")
+            for s in strumenti_del_tipo:
+                stato = "✅" if s.disponibile else "⛔"
+                self._view.lista_strumenti_ricerca.controls.append(ft.Text(f"{stato} {s}"))
+            self._view.lista_strumenti_ricerca.update()
+
+        except Exception as e:
+            alert = AlertManager(self._view.page)
+            alert.show_alert(f"ERRORE:❌ {e}")
+
+
