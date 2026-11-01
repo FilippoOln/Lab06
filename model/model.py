@@ -38,6 +38,8 @@ class DepositoStrumenti:
 
         lista_strumenti = []
         cnx = get_connection()
+        #se la connessione non è andata a buon fine lancio un'eccezione che sarà gestita
+        #nel blocco except delle funzioni che chiameranno qsta funzione
         if cnx is None:
             raise Exception("la connessione al database non è andata a buon fine!!")
         cursore = cnx.cursor(dictionary=True)
@@ -48,6 +50,7 @@ class DepositoStrumenti:
                                   row["anno_acquisto"], row["valore"], row["disponibile"])
             lista_strumenti.append(strumento)
         cnx.close()
+        # se nel deposito non era presente nessuno strumento restituisco il valor None
         if lista_strumenti == []:
             return None
         return lista_strumenti
@@ -73,6 +76,7 @@ class DepositoStrumenti:
                                   row["anno_acquisto"], row["valore"], row["disponibile"])
             strumenti_del_tipo.append(strumento)
         cnx.close()
+        # se nessuno strumento di quel tipo è presente nel deposito restituisco il valor None
         if strumenti_del_tipo == []:
             return None
         return strumenti_del_tipo
