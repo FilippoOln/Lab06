@@ -29,7 +29,7 @@ class Controller:
         self._view.update()
 
     # Altre Funzioni Event Handler
-    def handler_mostra_strumenti(self):
+    def handler_mostra_strumenti(self, e):
         try:
             self._view.lista_strumenti.controls.clear()
             lista_strumenti = self._model.get_strumenti()
@@ -46,7 +46,7 @@ class Controller:
 
 
 
-    def handler_cerca_per_tipo(self):
+    def handler_cerca_per_tipo(self, e):
         try:
             self._view.lista_strumenti_ricerca.controls.clear()
             tipo = self._view.input_tipo_strumento.value
