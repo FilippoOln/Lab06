@@ -49,6 +49,7 @@ class DepositoStrumenti:
             strumento = Strumento(row["codice"], row["tipo"], row["marca"],
                                   row["anno_acquisto"], row["valore"], row["disponibile"])
             lista_strumenti.append(strumento)
+        cursore.close()
         cnx.close()
         # se nel deposito non era presente nessuno strumento restituisco il valor None
         if lista_strumenti == []:
@@ -75,6 +76,7 @@ class DepositoStrumenti:
             strumento = Strumento(row["codice"], row["tipo"], row["marca"],
                                   row["anno_acquisto"], row["valore"], row["disponibile"])
             strumenti_del_tipo.append(strumento)
+        cursore.close()
         cnx.close()
         # se nessuno strumento di quel tipo è presente nel deposito restituisco il valor None
         if strumenti_del_tipo == []:
